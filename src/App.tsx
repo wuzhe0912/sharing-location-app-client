@@ -1,8 +1,15 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage/LoginPage';
+import MapPage from './pages/MapPage/MapPage';
+
 function App() {
   return (
-    <h1 className='text-3xl text-purple-400 font-bold underline'>
-      Hello world!
-    </h1>
+    <Router>
+      <Routes>
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/map' element={<MapPage />} />
+      </Routes>
+    </Router>
   );
 }
 
