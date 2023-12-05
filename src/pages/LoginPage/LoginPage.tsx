@@ -1,35 +1,33 @@
-import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Logo from './Logo';
+import LoginInput from './LoginInput';
+import LoginButton from './LoginButton';
 
-const Logo = () => {
-  return (
-    <p className='text-[28px] italic font-bold text-white p-0 m-0'>GeoCall</p>
-  );
-};
-
-const LoginInput = () => {
-  return (
-    <input
-      className='w-[300px] h-[60px] rounded-[8px] border-none outline-none'
-      type='text'
-    />
-  );
-};
-
-const LoginButton = () => {
-  return (
-    <button className='w-[300px] h-[50px] rounded-[8px] border border-[#ccc]'>
-      Login
-    </button>
-  );
+const isUserNameValid = (userName: string) => {
+  return userName.length > 0 && userName.length < 10 && !userName.includes(' ');
 };
 
 function LoginPage() {
+  const [userName, setUserName] = useState<string>('');
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    if (isUserNameValid(userName)) {
+      navigate('/map');
+    }
+  };
+
   return (
-    <div className='w-full h-screen flex flex-col justify-center items-center bg-[#80a5e5]'>
-      <div className='w-[400px] h-[400px] bg-[#1081E0] flex flex-col justify-evenly items-center'>
+    <div className='w-full h-screen flex flex-col justify-center items-center bg-gradient-to-r from-blue-500 to-indigo-600'>
+      <div className='w-[400px] h-[350px] bg-white rounded-lg shadow-xl flex flex-col justify-evenly items-center p-8'>
         <Logo />
-        <LoginInput />
-        <LoginButton />
+        <LoginInput userName={userName} setUserName={setUserName} />
+        <LoginButton
+          disabled={!isUserNameValid(userName)}
+          onClickHandler={handleLogin}
+        />
       </div>
     </div>
   );
